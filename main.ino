@@ -15,6 +15,25 @@ NeoPixelBus strip = NeoPixelBus(pixelCount, pixelPin);
 const char *ssid = "your-ssid";
 const char *password = "your-pass";
 
+void setStripByData(byte* data, int sl)
+{
+  //Serial.println(sl);
+  int led = 0;
+  for (int i = 4; i <= sl; i = i + 3) {
+    /* if (led < 3) //love for leds
+     {
+       Serial.print(data[i]); Serial.print(" ");
+       Serial.print(data[i + 1]); Serial.print(" ");
+       Serial.print(data[i + 2]); Serial.print(" ");
+     }
+    */
+    strip.SetPixelColor(led, RgbColor(data[i], data[i + 1], data[i + 2]));
+    led++;
+  }
+  strip.Show();
+  Serial.print ( "." );
+}
+
 void setup()
 {
   Serial.begin ( 115200 );
@@ -66,21 +85,4 @@ void loop()
   }
 }
 
-void setStripByData(byte* data, int sl)
-{
-  //Serial.println(sl);
-  int led = 0;
-  for (int i = 4; i <= sl; i = i + 3) {
-    /* if (led < 3) //love for leds
-     {
-       Serial.print(data[i]); Serial.print(" ");
-       Serial.print(data[i + 1]); Serial.print(" ");
-       Serial.print(data[i + 2]); Serial.print(" ");
-     }
-    */
-    strip.SetPixelColor(led, RgbColor(data[i], data[i + 1], data[i + 2]));
-    led++;
-  }
-  strip.Show();
-  Serial.print ( "." );
-}
+
